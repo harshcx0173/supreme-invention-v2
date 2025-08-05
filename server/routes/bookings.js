@@ -260,7 +260,7 @@ router.post('/', requireAuth, [
       booking: {
         id: booking._id,
         startTime: booking.startTime,
-        endTime: booking.endTime,
+        endTime: booking.endTime, 
         title: booking.title,
         status: booking.status,
         meetingType: booking.meetingType,
