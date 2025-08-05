@@ -1,0 +1,20 @@
+{
+  "name": "meeting-booking-app",
+  "version": "1.0.0",
+  "description": "Full-stack meeting booking app with Google OAuth and Calendar integration",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "preview": "cd client && npm run preview",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": ["meeting", "booking", "google-oauth", "calendar", "react", "nodejs", "vite"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 
