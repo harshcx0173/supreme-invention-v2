@@ -24,7 +24,7 @@ router.get('/google/callback',
   (req, res) => {
     // Successful authentication, redirect to frontend
     res.redirect(process.env.NODE_ENV === 'production' 
-      ? 'https://yourdomain.com/dashboard' 
+      ? 'http://localhost:3000/dashboard' // Update this to your actual frontend domain
       : 'http://localhost:3000/dashboard');
   }
 );

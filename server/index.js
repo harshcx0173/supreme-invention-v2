@@ -30,7 +30,10 @@ app.use(limiter);
 
 // CORS configuration
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['http://localhost:3000', 'https://yourdomain.com'] // Add your actual frontend domain here
+    : ['http://localhost:3000'],
+  credentials: true
 }));
 
 // Body parsing middleware
@@ -43,9 +46,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === 'production' && process.env.NODE_ENV !== 'development',
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
   }
 }));
 
@@ -61,6 +65,15 @@ app.use(passport.session());
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/meeting-booking-app')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+// Root endpoint for testing
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Server is running!', 
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Routes
 app.use('/auth', authRoutes);
