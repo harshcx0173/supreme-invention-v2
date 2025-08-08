@@ -30,6 +30,8 @@ The deployment was failing due to missing `@mongodb-js/saslprep` module, which i
 The deployment was failing due to multiple dependency issues. This has been fixed by:
 - Downgrading Mongoose to version 7.6.3 (more stable with Node.js 20)
 - Downgrading express-rate-limit to version 6.10.0 (fixes module not found error)
+- Downgrading Passport packages to stable versions (passport: 0.6.0, passport-google-oauth20: 1.0.0)
+- Adding base64url dependency explicitly (version 3.0.1)
 - Downgrading other packages to more stable versions
 - Adding `.npmrc` file with `legacy-peer-deps=true`
 
@@ -74,10 +76,13 @@ res.redirect(process.env.NODE_ENV === 'production'
 - Verify environment variables are set correctly
 - Check Render logs for any startup errors
 
-### Issue: Module not found errors (MongoDB, express-rate-limit, etc.)
+### Issue: Module not found errors (MongoDB, express-rate-limit, base64url, etc.)
 - The fixes have been applied by downgrading packages to stable versions:
   - Mongoose: 7.6.3
   - express-rate-limit: 6.10.0
+  - passport: 0.6.0
+  - passport-google-oauth20: 1.0.0
+  - base64url: 3.0.1 (added explicitly)
   - Other packages to compatible versions
 - Ensure the `.npmrc` file is present in your server directory
 - If the issue persists, try clearing the Render cache and redeploying
