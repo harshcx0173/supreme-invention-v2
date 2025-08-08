@@ -8,6 +8,9 @@ The error "redirect_uri_mismatch" occurs because your Google OAuth callback URL 
 ### 2. Server Route Not Found Error
 The server was deployed but routes weren't accessible due to CORS and session configuration issues.
 
+### 3. MongoDB Module Not Found Error
+The deployment was failing due to missing `@mongodb-js/saslprep` module, which is a common issue with Node.js 20 and newer MongoDB drivers.
+
 ## Steps to Fix
 
 ### Step 1: Update Google Cloud Console OAuth Configuration
@@ -22,7 +25,13 @@ The server was deployed but routes weren't accessible due to CORS and session co
    ```
 5. Click **Save**
 
-### Step 2: Update Environment Variables on Render
+### Step 2: Fix MongoDB Dependency Issue
+
+The deployment was failing due to a MongoDB dependency issue. This has been fixed by:
+- Downgrading Mongoose to version 7.6.3 (more stable with Node.js 20)
+- Adding `.npmrc` file with `legacy-peer-deps=true`
+
+### Step 3: Update Environment Variables on Render
 
 In your Render dashboard, update these environment variables:
 
@@ -35,7 +44,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 SESSION_SECRET=your_session_secret
 ```
 
-### Step 3: Update Frontend Domain
+### Step 4: Update Frontend Domain
 
 If you have a frontend deployed, update the callback redirect URL in `server/routes/auth.js`:
 
@@ -45,7 +54,7 @@ res.redirect(process.env.NODE_ENV === 'production'
   : 'http://localhost:3000/dashboard');
 ```
 
-### Step 4: Test Your Deployment
+### Step 5: Test Your Deployment
 
 1. Visit: `https://supreme-invention-v2.onrender.com/`
    - Should show: `{"message":"Server is running!","environment":"production","timestamp":"..."}`
@@ -62,6 +71,11 @@ res.redirect(process.env.NODE_ENV === 'production'
 - Check if your Render service is actually running
 - Verify environment variables are set correctly
 - Check Render logs for any startup errors
+
+### Issue: MongoDB module not found error
+- The fix has been applied by downgrading Mongoose to version 7.6.3
+- Ensure the `.npmrc` file is present in your server directory
+- If the issue persists, try clearing the Render cache and redeploying
 
 ### Issue: OAuth still fails
 - Double-check the redirect URI in Google Cloud Console
