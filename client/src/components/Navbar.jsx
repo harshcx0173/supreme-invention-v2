@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
-import { Calendar, Home, User, LogOut, Menu, X, Settings } from 'lucide-react';
+import { Calendar, Home, User, LogOut, Menu, X, Settings, Users } from 'lucide-react';
+import { getProxiedImageUrl } from '../utils/imageProxy';
 
 const Navbar = () => {
   const { user, logout, login } = useAuth();
@@ -14,6 +15,7 @@ const Navbar = () => {
     { name: 'Book Meeting', href: '/book', icon: Calendar, requiresAuth: true },
     { name: 'My Bookings', href: '/my-bookings', icon: Calendar, requiresAuth: true },
     { name: 'Admin', href: '/admin', icon: Settings, requiresAuth: true, requiresAdmin: true },
+    { name: 'User Management', href: '/admin/users', icon: Users, requiresAuth: true, requiresSuperAdmin: true },
   ];
 
   const handleLogout = async () => {
@@ -39,6 +41,7 @@ const Navbar = () => {
             {navigation.map((item) => {
               if (item.requiresAuth && !user) return null;
               if (item.requiresAdmin && !user?.isAdmin) return null;
+              if (item.requiresSuperAdmin && !user?.isSuperAdmin) return null;
 
               const Icon = item.icon;
               return (
@@ -65,7 +68,7 @@ const Navbar = () => {
                   {user.picture && (
                     <img
                       className="h-8 w-8 rounded-full"
-                      src={user.picture}
+                      src={getProxiedImageUrl(user.picture)}
                       alt={user.name}
                     />
                   )}
@@ -115,6 +118,7 @@ const Navbar = () => {
             {navigation.map((item) => {
               if (item.requiresAuth && !user) return null;
               if (item.requiresAdmin && !user?.isAdmin) return null;
+              if (item.requiresSuperAdmin && !user?.isSuperAdmin) return null;
 
               const Icon = item.icon;
               return (
@@ -139,7 +143,7 @@ const Navbar = () => {
                   {user.picture && (
                     <img
                       className="h-8 w-8 rounded-full"
-                      src={user.picture}
+                      src={getProxiedImageUrl(user.picture)}
                       alt={user.name}
                     />
                   )}

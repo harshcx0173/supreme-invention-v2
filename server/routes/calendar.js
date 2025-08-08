@@ -69,7 +69,7 @@ router.get(
       });
     } catch (error) {
       console.error("Error getting available slots:", error);
-      res.status(500).json({ error: "Failed to get available time slots" });
+      res.status(500).json({ error: "Failed to get available time slotsssss" });
     }
   }
 );

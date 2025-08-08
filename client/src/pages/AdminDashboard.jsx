@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Calendar, Users, Clock, TrendingUp, Filter, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Calendar, Users, Clock, TrendingUp, Filter, Eye, Shield } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [bookings, setBookings] = useState([]);
@@ -95,10 +96,12 @@ const AdminDashboard = () => {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
-        <p className="text-gray-600">
-          Manage all bookings and monitor system activity
-        </p>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
+          <p className="text-gray-600">
+            Manage all bookings and monitor system activity
+          </p>
+        </div>
       </div>
 
       {/* Stats Cards */}

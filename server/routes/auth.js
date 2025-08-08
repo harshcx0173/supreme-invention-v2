@@ -53,7 +53,8 @@ router.get('/user', (req, res) => {
       name: req.user.name,
       email: req.user.email,
       picture: req.user.picture,
-      isAdmin: req.user.isAdmin
+      isAdmin: req.user.isAdmin,
+      isSuperAdmin: req.user.isSuperAdmin
     };
     res.json(user);
   } else {
@@ -70,7 +71,8 @@ router.get('/status', (req, res) => {
       name: req.user.name,
       email: req.user.email,
       picture: req.user.picture,
-      isAdmin: req.user.isAdmin
+      isAdmin: req.user.isAdmin,
+      isSuperAdmin: req.user.isSuperAdmin
     } : null
   });
 });

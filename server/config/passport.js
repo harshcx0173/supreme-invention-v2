@@ -31,10 +31,17 @@ passport.use(new GoogleStrategy({
     let user = await User.findOne({ googleId: profile.id });
     
     if (user) {
-      // Update access token and refresh token
+      // Update access token, refresh token, and profile data
       user.accessToken = accessToken;
       user.refreshToken = refreshToken;
       user.lastLogin = new Date();
+      // Update profile picture and name in case they changed
+      if (profile.photos && profile.photos[0]) {
+        user.picture = profile.photos[0].value;
+      }
+      if (profile.displayName) {
+        user.name = profile.displayName;
+      }
       await user.save();
       return done(null, user);
     }
