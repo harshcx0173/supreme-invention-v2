@@ -25,10 +25,12 @@ The deployment was failing due to missing `@mongodb-js/saslprep` module, which i
    ```
 5. Click **Save**
 
-### Step 2: Fix MongoDB Dependency Issue
+### Step 2: Fix Dependency Issues
 
-The deployment was failing due to a MongoDB dependency issue. This has been fixed by:
+The deployment was failing due to multiple dependency issues. This has been fixed by:
 - Downgrading Mongoose to version 7.6.3 (more stable with Node.js 20)
+- Downgrading express-rate-limit to version 6.10.0 (fixes module not found error)
+- Downgrading other packages to more stable versions
 - Adding `.npmrc` file with `legacy-peer-deps=true`
 
 ### Step 3: Update Environment Variables on Render
@@ -72,8 +74,11 @@ res.redirect(process.env.NODE_ENV === 'production'
 - Verify environment variables are set correctly
 - Check Render logs for any startup errors
 
-### Issue: MongoDB module not found error
-- The fix has been applied by downgrading Mongoose to version 7.6.3
+### Issue: Module not found errors (MongoDB, express-rate-limit, etc.)
+- The fixes have been applied by downgrading packages to stable versions:
+  - Mongoose: 7.6.3
+  - express-rate-limit: 6.10.0
+  - Other packages to compatible versions
 - Ensure the `.npmrc` file is present in your server directory
 - If the issue persists, try clearing the Render cache and redeploying
 
