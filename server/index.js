@@ -30,10 +30,7 @@ app.use(limiter);
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? ['https://yourdomain.com']
-    : ['http://localhost:3000'],
-  credentials: true
+  origin: 'http://localhost:3000'
 }));
 
 // Body parsing middleware
